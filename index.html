@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="description" content="Mohsin Zahid — backend lead and agentic AI engineer building production multi-agent systems, MCP tooling, and developer platforms." />
+  <link rel="icon" href="data:," />
+  <title>Mohsin Zahid — Agentic AI Engineer</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f4f1e8;
+      --surface: #fffdf7;
+      --surface-2: #e9e5da;
+      --ink: #151713;
+      --muted: #5b5e54;
+      --line: #c9c6bb;
+      --accent: #d5ff32;
+      --accent-ink: #121500;
+      --code: #20363a;
+      --code-ink: #e9ff99;
+      --shadow: rgba(21, 23, 19, .13);
+      --max: 1180px;
+      --radius-lg: 28px;
+      --radius-md: 16px;
+      --sans: "Aptos", "Segoe UI", Helvetica, sans-serif;
+      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111310;
+        --surface: #181b17;
+        --surface-2: #22261f;
+        --ink: #f2f1e9;
+        --muted: #b4b7ac;
+        --line: #373c34;
+        --accent: #d5ff32;
+        --accent-ink: #121500;
+        --code: #0d2428;
+        --code-ink: #deff73;
+        --shadow: rgba(0, 0, 0, .35);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.55;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    ::selection { background: var(--accent); color: var(--accent-ink); }
+    .skip-link {
+      position: fixed;
+      left: 16px;
+      top: 12px;
+      transform: translateY(-160%);
+      background: var(--ink);
+      color: var(--bg);
+      padding: 10px 14px;
+      z-index: 100;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .shell {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+      padding: 28px 0 52px;
+    }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      min-height: 44px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      background: var(--accent);
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+    }
+    .top-actions { display: flex; gap: 18px; align-items: center; }
+    .text-link {
+      text-decoration-thickness: 1px;
+      text-underline-offset: 5px;
+      font-weight: 700;
+    }
+    .text-link:hover { text-decoration-thickness: 2px; }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 184px;
+      gap: 68px;
+      align-items: start;
+    }
+    .rail {
+      position: sticky;
+      top: 24px;
+      padding-top: 58px;
+    }
+    .rail-label {
+      margin: 0 0 14px;
+      font: 700 11px/1.2 var(--mono);
+      letter-spacing: .12em;
+      color: var(--muted);
+    }
+    .rail nav { border-top: 1px solid var(--line); }
+    .rail a {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+      text-decoration: none;
+      font-weight: 800;
+    }
+    .rail a span { color: var(--muted); font: 12px var(--mono); }
+    .rail a:hover, .rail a.active { padding-left: 8px; color: var(--ink); }
+    .rail a.active span { color: var(--ink); }
+    .content { min-width: 0; }
+    .hero {
+      position: relative;
+      padding: 82px 0 94px;
+      min-height: 580px;
+      display: grid;
+      align-content: center;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 54px;
+      width: min(39vw, 380px);
+      height: 148px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, transparent 24%, var(--line) 25%, transparent 26%, transparent 49%, var(--line) 50%, transparent 51%, transparent 74%, var(--line) 75%, transparent 76%),
+        linear-gradient(0deg, transparent 48%, var(--line) 49%, transparent 50%);
+      opacity: .72;
+      pointer-events: none;
+    }
+    .hero-kicker {
+      max-width: 610px;
+      margin: 0 0 24px;
+      font: 700 13px/1.4 var(--mono);
+      color: var(--muted);
+    }
+    h1 {
+      max-width: 780px;
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(54px, 8.3vw, 112px);
+      line-height: .86;
+      letter-spacing: -.055em;
+      font-weight: 500;
+    }
+    h1 .role {
+      display: block;
+      margin-top: .23em;
+      color: var(--muted);
+      font-size: .45em;
+      line-height: 1;
+      letter-spacing: -.035em;
+    }
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      margin: 38px 0 0;
+      font-size: clamp(18px, 2vw, 23px);
+      line-height: 1.45;
+      font-weight: 600;
+    }
+    .hero-actions {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 11px 17px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--bg);
+      border-radius: 7px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .button:hover { background: var(--accent); color: var(--accent-ink); }
+    .button.secondary { background: transparent; color: var(--ink); }
+    .button.secondary:hover { background: var(--surface-2); }
+    .section {
+      padding: 82px 0;
+      border-top: 1px solid var(--line);
+      scroll-margin-top: 24px;
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: 118px minmax(0, 1fr);
+      gap: 24px;
+      margin-bottom: 42px;
+      align-items: start;
+    }
+    .section-no {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font: 700 13px/1 var(--mono);
+    }
+    h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(38px, 5.3vw, 68px);
+      line-height: .98;
+      letter-spacing: -.04em;
+    }
+    .section-intro {
+      grid-column: 2;
+      max-width: 670px;
+      margin: -18px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+    .projects { display: grid; gap: 18px; }
+    .project {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr);
+      min-height: 310px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      box-shadow: 0 18px 40px -34px var(--shadow);
+    }
+    .project-copy {
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .project-index {
+      margin-bottom: 52px;
+      font: 700 12px/1 var(--mono);
+      color: var(--muted);
+    }
+    .project h3 {
+      margin: 0 0 13px;
+      font-family: var(--serif);
+      font-size: clamp(29px, 4vw, 46px);
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -.035em;
+    }
+    .project p { max-width: 580px; margin: 0 0 24px; color: var(--muted); font-size: 17px; }
+    .project-link {
+      margin-top: auto;
+      font: 800 14px/1.3 var(--mono);
+      text-underline-offset: 5px;
+    }
+    .project-visual {
+      min-height: 310px;
+      padding: 24px;
+      background: var(--code);
+      color: var(--code-ink);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .project-visual svg { width: 100%; height: auto; max-height: 260px; overflow: visible; }
+    .node { fill: var(--code); stroke: currentColor; stroke-width: 1.4; }
+    .node-hot { fill: var(--accent); stroke: var(--accent); color: var(--accent-ink); }
+    .edge { fill: none; stroke: currentColor; stroke-width: 1.2; opacity: .55; }
+    .dash { stroke-dasharray: 4 6; }
+    .svg-label { fill: currentColor; font: 700 8px var(--mono); letter-spacing: .05em; }
+    .node-hot + .svg-label { fill: var(--accent-ink); }
+    .mini-code { width: 100%; font: 12px/1.8 var(--mono); color: var(--code-ink); }
+    .mini-code .dim { opacity: .55; }
+    .mini-code .hot { color: var(--accent); }
+    .review-flow { width: 100%; display: grid; grid-template-columns: 1fr 40px 1fr; gap: 8px; align-items: center; }
+    .review-box { border: 1px solid currentColor; padding: 14px; min-height: 76px; font: 700 11px/1.45 var(--mono); }
+    .review-box.approval { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+    .review-arrow { text-align: center; font-family: var(--mono); }
+    .project:nth-child(even) .project-copy { order: 2; }
+    .project:nth-child(even) .project-visual { order: 1; }
+    .project.text-only { grid-template-columns: 1fr; min-height: 0; }
+    .project.text-only .project-copy { order: 1; min-height: 280px; }
+    .experience-list { border-top: 1px solid var(--line); }
+    .subsection-label {
+      margin: 48px 0 14px;
+      font: 700 12px/1.2 var(--mono);
+      letter-spacing: .12em;
+      color: var(--muted);
+    }
+    .role-row {
+      display: grid;
+      grid-template-columns: 118px minmax(0, 1.2fr) minmax(180px, .7fr);
+      gap: 24px;
+      padding: 30px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .role-date { color: var(--muted); font: 700 12px/1.55 var(--mono); }
+    .role-title h3 { margin: 0 0 7px; font-size: 21px; line-height: 1.2; }
+    .role-title p { margin: 0; color: var(--muted); }
+    .role-note { margin: 0; color: var(--muted); }
+    .skill-board {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+    .skill-group {
+      padding: 28px;
+      min-height: 182px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .skill-group h3 { margin: 0 0 18px; font: 700 12px/1.2 var(--mono); color: var(--muted); }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 9px 16px; }
+    .skill-list span { font-size: clamp(19px, 2.4vw, 27px); font-weight: 750; letter-spacing: -.025em; }
+    .skill-list span:not(:last-child)::after { content: "/"; margin-left: 16px; color: var(--line); font-weight: 400; }
+    .contact-panel {
+      position: relative;
+      overflow: hidden;
+      background: var(--ink);
+      color: var(--bg);
+      padding: clamp(34px, 7vw, 76px);
+      border-radius: var(--radius-lg);
+    }
+    .contact-panel::after {
+      content: "MCP";
+      position: absolute;
+      right: -12px;
+      bottom: -50px;
+      font: 800 clamp(100px, 21vw, 250px)/1 var(--mono);
+      color: color-mix(in srgb, var(--bg) 6%, transparent);
+      pointer-events: none;
+    }
+    .contact-panel h2 { position: relative; z-index: 1; max-width: 680px; font-size: clamp(43px, 7vw, 82px); }
+    .contact-panel p { position: relative; z-index: 1; max-width: 610px; margin: 24px 0 30px; font-size: 18px; color: color-mix(in srgb, var(--bg) 76%, transparent); }
+    .contact-links { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 12px; }
+    .contact-panel .button { border-color: var(--bg); background: var(--bg); color: var(--ink); }
+    .contact-panel .button:hover { background: var(--accent); border-color: var(--accent); }
+    .contact-panel .button.secondary { background: transparent; color: var(--bg); }
+    .contact-panel .button.secondary:hover { background: color-mix(in srgb, var(--bg) 12%, transparent); }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 32px;
+      color: var(--muted);
+      font: 12px/1.5 var(--mono);
+    }
+    .mobile-nav { display: none; }
+    svg.icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+
+    @media (max-width: 900px) {
+      .shell { width: min(calc(100% - 30px), 760px); padding-top: 18px; }
+      .layout { display: block; }
+      .rail { display: none; }
+      .mobile-nav {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        margin-top: 14px;
+        overflow: hidden;
+      }
+      .mobile-nav a {
+        padding: 11px 6px;
+        border-right: 1px solid var(--line);
+        text-align: center;
+        text-decoration: none;
+        font: 700 11px/1.2 var(--mono);
+      }
+      .mobile-nav a:last-child { border-right: 0; }
+      .hero { min-height: auto; padding: 72px 0 76px; }
+      .hero::after { width: 42%; height: 120px; bottom: 44px; opacity: .5; }
+      .project { grid-template-columns: 1fr; }
+      .project-copy, .project:nth-child(even) .project-copy { order: 1; }
+      .project-visual, .project:nth-child(even) .project-visual { order: 2; min-height: 240px; }
+      .project-index { margin-bottom: 34px; }
+      .role-row { grid-template-columns: 100px minmax(0, 1fr); }
+      .role-note { grid-column: 2; }
+    }
+
+    @media (max-width: 580px) {
+      .shell { width: min(calc(100% - 24px), 760px); }
+      .topline { align-items: flex-start; gap: 12px; }
+      .top-actions { gap: 12px; flex-direction: column; align-items: flex-end; }
+      .top-actions .text-link:first-child { display: none; }
+      .mobile-nav { grid-template-columns: 1fr 1fr; }
+      .mobile-nav a:nth-child(2) { border-right: 0; }
+      .mobile-nav a:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .hero { padding: 60px 0 64px; }
+      h1 { font-size: clamp(48px, 17vw, 74px); }
+      h1 .role { font-size: .39em; line-height: 1.05; }
+      .hero-copy { font-size: 18px; }
+      .hero::after { display: none; }
+      .button { width: 100%; }
+      .section { padding: 64px 0; }
+      .section-head { grid-template-columns: 48px minmax(0, 1fr); gap: 12px; margin-bottom: 34px; }
+      .section-intro { grid-column: 1 / -1; margin-top: 8px; }
+      .project { border-radius: 18px; }
+      .project-copy { padding: 26px; }
+      .project-visual { min-height: 220px; padding: 18px; }
+      .review-flow { grid-template-columns: 1fr; }
+      .review-arrow { transform: rotate(90deg); }
+      .role-row { grid-template-columns: 1fr; gap: 8px; }
+      .role-note { grid-column: auto; }
+      .skill-board { grid-template-columns: 1fr; }
+      .skill-group { min-height: auto; padding: 24px; }
+      .skill-list span { font-size: 21px; }
+      .contact-panel { border-radius: 18px; padding: 30px 24px; }
+      footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="shell">
+    <div class="topline" aria-label="Profile status">
+      <div class="status"><span class="status-dot" aria-hidden="true"></span>Open to agentic AI roles</div>
+      <div class="top-actions">
+        <a class="text-link" href="mailto:mohsinzahid16@gmail.com">mohsinzahid16@gmail.com</a>
+        <a class="text-link" href="data:application/octet-stream;base64,JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIgL0Y0IDUgMCBSCj4+CmVuZG9iagoyIDAgb2JqCjw8Ci9CYXNlRm9udCAvSGVsdmV0aWNhIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMSAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjMgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EtQm9sZCAvRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZyAvTmFtZSAvRjIgL1N1YnR5cGUgL1R5cGUxIC9UeXBlIC9Gb250Cj4+CmVuZG9iago0IDAgb2JqCjw8Ci9CYXNlRm9udCAvSGVsdmV0aWNhLU9ibGlxdWUgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YzIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKNSAwIG9iago8PAovQmFzZUZvbnQgL1N5bWJvbCAvTmFtZSAvRjQgL1N1YnR5cGUgL1R5cGUxIC9UeXBlIC9Gb250Cj4+CmVuZG9iago2IDAgb2JqCjw8Ci9BIDw8Ci9TIC9VUkkgL1R5cGUgL0FjdGlvbiAvVVJJIChodHRwczovL3B1bHNlLm11c3QuY29tcGFueSkKPj4gL0JvcmRlciBbIDAgMCAwIF0gL1JlY3QgWyAzMDYuNTgzNiAxMTYuNjM3IDM3OS45NDM2IDEyNi4yMzcgXSAvU3VidHlwZSAvTGluayAvVHlwZSAvQW5ub3QKPj4KZW5kb2JqCjcgMCBvYmoKPDwKL0EgPDwKL1MgL1VSSSAvVHlwZSAvQWN0aW9uIC9VUkkgKGh0dHBzOi8vZ2l0aHViLmNvbS9tdXN0LW1vaHNpbjEvZGV2LW9zKQo+PiAvQm9yZGVyIFsgMCAwIDAgXSAvUmVjdCBbIDI1MC4xMDM2IDk1LjAzNzAxIDI3NC45OTk2IDEwNC42MzcgXSAvU3VidHlwZSAvTGluayAvVHlwZSAvQW5ub3QKPj4KZW5kb2JqCjggMCBvYmoKPDwKL0EgPDwKL1MgL1VSSSAvVHlwZSAvQWN0aW9uIC9VUkkgKGh0dHBzOi8vZ2l0aHViLmNvbS9tdXN0LW1vaHNpbjEvaGVybWVzLWRldmNyZXcpCj4+IC9Cb3JkZXIgWyAwIDAgMCBdIC9SZWN0IFsgMzc5Ljk0MzYgNzMuNDM3MDEgNDA0LjgzOTYgODMuMDM3MDEgXSAvU3VidHlwZSAvTGluayAvVHlwZSAvQW5ub3QKPj4KZW5kb2JqCjkgMCBvYmoKPDwKL0Fubm90cyBbIDYgMCBSIDcgMCBSIDggMCBSIF0gL0NvbnRlbnRzIDE5IDAgUiAvTWVkaWFCb3ggWyAwIDAgNTk1LjI3NTYgODQxLjg4OTggXSAvUGFyZW50IDE4IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAKICAvVHJhbnMgPDwKCj4+IC9UeXBlIC9QYWdlCj4+CmVuZG9iagoxMCAwIG9iago8PAovQSA8PAovUyAvVVJJIC9UeXBlIC9BY3Rpb24gL1VSSSAoaHR0cHM6Ly9jb2Rlcm92ZXIubXVzdC5jb21wYW55KQo+PiAvQm9yZGVyIFsgMCAwIDAgXSAvUmVjdCBbIDY2LjAyMzYyIDc2Ny4wMDQ3IDE1NS44MzE2IDc3Ni42MDQ3IF0gL1N1YnR5cGUgL0xpbmsgL1R5cGUgL0Fubm90Cj4+CmVuZG9iagoxMSAwIG9iago8PAovQSA8PAovUyAvVVJJIC9UeXBlIC9BY3Rpb24gL1VSSSAoaHR0cHM6Ly9naXRodWIuY29tL01VU1QtQ29tcGFueS1BWC1Cb29zdGVyL01VU1QtYWdlbnRzKQo+PiAvQm9yZGVyIFsgMCAwIDAgXSAvUmVjdCBbIDE3Mi4yOTU2IDcyMy44MDQ3IDE5Ny4xOTE2IDczMy40MDQ3IF0gL1N1YnR5cGUgL0xpbmsgL1R5cGUgL0Fubm90Cj4+CmVuZG9iagoxMiAwIG9iago8PAovQSA8PAovUyAvVVJJIC9UeXBlIC9BY3Rpb24gL1VSSSAoaHR0cHM6Ly9naXRodWIuY29tL211c3QtbW9oc2luMS9jb2RlYXRsYXMpCj4+IC9Cb3JkZXIgWyAwIDAgMCBdIC9SZWN0IFsgMzM5LjM5MTYgNjY1LjE1MjggMzY0LjI4NzYgNjc0Ljc1MjggXSAvU3VidHlwZSAvTGluayAvVHlwZSAvQW5ub3QKPj4KZW5kb2JqCjEzIDAgb2JqCjw8Ci9BIDw8Ci9TIC9VUkkgL1R5cGUgL0FjdGlvbiAvVVJJIChodHRwczovL2dpdGh1Yi5jb20vbXVzdC1tb2hzaW4xL3FtKQo+PiAvQm9yZGVyIFsgMCAwIDAgXSAvUmVjdCBbIDUxMC45ODM2IDY1My4zNTI4IDUzNS44Nzk2IDY2Mi45NTI4IF0gL1N1YnR5cGUgL0xpbmsgL1R5cGUgL0Fubm90Cj4+CmVuZG9iagoxNCAwIG9iago8PAovQSA8PAovUyAvVVJJIC9UeXBlIC9BY3Rpb24gL1VSSSAoaHR0cHM6Ly9naXRodWIuY29tL211c3QtbW9oc2luMS9taXJhai1kYXNoYm9hcmQpCj4+IC9Cb3JkZXIgWyAwIDAgMCBdIC9SZWN0IFsgMTU1LjM3NTYgNjMxLjc1MjggMTgwLjI3MTYgNjQxLjM1MjggXSAvU3VidHlwZSAvTGluayAvVHlwZSAvQW5ub3QKPj4KZW5kb2JqCjE1IDAgb2JqCjw8Ci9Bbm5vdHMgWyAxMCAwIFIgMTEgMCBSIDEyIDAgUiAxMyAwIFIgMTQgMCBSIF0gL0NvbnRlbnRzIDIwIDAgUiAvTWVkaWFCb3ggWyAwIDAgNTk1LjI3NTYgODQxLjg4OTggXSAvUGFyZW50IDE4IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAKICAvVHJhbnMgPDwKCj4+IC9UeXBlIC9QYWdlCj4+CmVuZG9iagoxNiAwIG9iago8PAovUGFnZU1vZGUgL1VzZU5vbmUgL1BhZ2VzIDE4IDAgUiAvVHlwZSAvQ2F0YWxvZwo+PgplbmRvYmoKMTcgMCBvYmoKPDwKL0F1dGhvciAoTW9oc2luIFphaGlkKSAvQ3JlYXRpb25EYXRlIChEOjIwMjYxMDAxMTM1OTEwKzA1JzAwJykgL0NyZWF0b3IgKFwodW5zcGVjaWZpZWRcKSkgL0tleXdvcmRzICgpIC9Nb2REYXRlIChEOjIwMjYxMDAxMTM1OTEwKzA1JzAwJykgL1Byb2R1Y2VyIChSZXBvcnRMYWIgUERGIExpYnJhcnkgLSBcKG9wZW5zb3VyY2VcKSkgCiAgL1N1YmplY3QgKFwodW5zcGVjaWZpZWRcKSkgL1RpdGxlIChNb2hzaW4gWmFoaWQgLSBTZW5pb3IgQWdlbnRpYyBBSSBFbmdpbmVlcikgL1RyYXBwZWQgL0ZhbHNlCj4+CmVuZG9iagoxOCAwIG9iago8PAovQ291bnQgMiAvS2lkcyBbIDkgMCBSIDE1IDAgUiBdIC9UeXBlIC9QYWdlcwo+PgplbmRvYmoKMTkgMCBvYmoKPDwKL0ZpbHRlciBbIC9BU0NJSTg1RGVjb2RlIC9GbGF0ZURlY29kZSBdIC9MZW5ndGggMzc3MAo+PgpzdHJlYW0KR2F1SE5nTiklPCZxMExVYllxLWUsIWsiLzk0IXBNVyohQTNCVFwuXFtlcWxeTD8tdGVMNVV0I1Y9cnNEb0YoX08sJVpDaFM0WWRVYVdbUFlvXV9zciU2MlNPSXVhTVgmMlgkJ18wWThTRidRLlUxPDZrT1teXWtzYExIbkFZc3VJakdYSCkmTDNBJidAYjAwUU8pMUhFcnE2UHMqbzgwRG1vWyRhJTomJClYQVJtS2Bba19NaG1fQmlqLmhGVGhpc1Q9Qm9jLSlMI29qP0lrWUsjMl1WVFtMS1Y+UW9fVCtrPTdjVG0xcGwsWG9kdE9XcWRbJ2pmdV1MX0IvM29xaUcwPTo6W1ZXM2pzI3A7QVdyQk1FWikrJyJlLWhoUjBcclNiU0hpKGlaR089bz1EKT9nIjpgOVo4OTMtYlxAIjUiK1s+IjBlPW1vJWBYZk1xYTE/UzM4I1AubFsqVGdtZk9fRiVKN2lIKEgtPktLQUpXZGtTIkJtT0FJcElccDY2TFw3WWMvXVhwL1hnJU9wVElEPCZXbWNDUG9EO11ZXD1rXm0jL1dWZTZtaTJSRTNBMTtNbk4lS3JZXjxyai1kUTtCcmw7MSEuJG42PCpMZjkqXFZOJzgnPiQ7clolWik8OU5FYjNva2VLUyJmYlM4YWQhSmgjQHU0R15tRGNpbF1TR08uUVZDY15XN3RoTSRcVTNhbV5adF8mPC9sJ2x0NnFKVnFePVlrM2haQU88JF1BQzw4bF02XFRZJ19jNGk5JzVJITo5VE00L0ZUJC1jTShUYU4xSGkoY1tyanJVP0AoUiU0RCQ3P0MjJFlnVFpKYC8zRjZsKj1vbD8sal1AbFNoRiheWmImT24raGgzXVRaQk9CPDVMUG0kQiQkbnBiVUtAZS8pVl9NLjkmMjBmTlAta19qJHMtck5xPEhoKmlYMD9abUwwT0VmaWsmX2MpaClscmNGVT1FTGlYNU85I0g+aiRGdEwjdHJPZD9WNj1HO2ZvTW9PYnEtIylaKGZzaD5NSGsnOk1GYWduJVRDPkpscTpGSzwqT1FgYkhdKHQkSS5SXVNhWyhOXGBYUHVOXl4ldDd0JyZVLStXZj4xUlk0NWdYW2dlYlhLQ1JkQERiTU9KYyI3Qitkaj1XRXQ6Jmw3TmI3NGhtMkNiVERpLSx1ZUU+XUdLaC1gU002ISkwIyRrcHReQFhNUUtTU0IxL09SXnEwWHNBLDJTMjRjcCZCIzN1YWRBNzFSWjJqJnBUR19iN2hFYHFnc01OKDVMcCZOK0tyQ25PPlJCcSNKSz9gSVlXWm8sbSNvNGEwQ2xMQGYtRUA6ZDgjWTxuRz01W3VdTzNGbChVUGkjPGFFO1BkI2hxP1h0aEImMm4pXy9IPzFzNS91STZ1KFhtWDsnN0lXKF85UDYpQSU9V0pgWzIuLl9rQXNTSiQ0WkZYNEsiTklzb2IwXkgzbUZSLE9aKEU1OWwuVWw+K2cpJHVGWCkncTppLHJhJ1VPP1pVSS5SOD9nYlRBaCg7NUwhNlo2Z0snPlY7ZlhRXDtJc00wTkA1W3MqQTVXUTlwcV1kOF5gOSdxVDIlRGA+Zi5aKnFPYjQ2VDRhVy9FKWsjaVdVXEREISc5Zjp0L1NVPEkoMyokM0YiTEw8YTI1RWZMQjByIWlNR2QrXVM+KT09IkcpYiVtQlspaC9sbGNnQlhbJS1pQ3RmakpLVlJtJ0tJcWxQVVQ0aCJLUE9OW1wkTjVkVURfUStFbENVMTROQlxGa0QmL25kXGwjPClYanVGLztuTE5mXCRmaS11O15DU2ViUF9VTmE5KXEyOW5RMzVhPVJOS0RyPCokOy1RV0NXZlwuUzxUUG9KM2c7ZSVvVVM3aFkuRzBzYS1lK25VUzA8Q1hvM2ljNig1P244ViYhbyYsajZvMmJrWFFlb1hPLytjLDMvcEs+RCdJYjlXPWlITEkjN25hYnMoNmRBWjxhIWsmJEtIIzsmQ0FdYXEuL1E1OT8sV3ElPmYzRyhuLyEpcFUkYk90OV11J2g+TF0qbllSSExSLUVDOm51az9gRzJkWkspWVlDNUxFJFtLMXA7YGtOWlxbXCEiOC02V3FWMEpZdTIxLkxsNyReRGNhQ3FgTytOVWNFP2okOzYhUDptZy5IbG0wM2Y6X1Q7OGojMkdHW1hLWnI9XUU7XGE0TSMsRVJmXzg9WWwoI15wQkBYLjJPT0BldU1wVyY2LFxgZlRVVSI2MjIrdWFYJjR1bVF1QjRrMmpfUUQ2VyJsV05wMlc3WWFuNnBwKyFDXT9aVSxAJHIrUFk1N0o6NyY5ZVVnal4hR0FsI2tMOTgpaW9ZUT1RS0kpMmwwU1hMX0onQkZkPSFrPUJJPWA+Q0txYDRbTicuPlVbPiMmYUpJZjxsUSRdM1QzUFhqbD9BSHNNQykrPz44WlZrKHRocygpXFlBSEo/bFM2bXUpazAyUmosTiMmSGIsJClMJ2Btb3U8QEdzZyYxaF8nQ3A+UD0zO05SP2BoRyFnPTRRMC1YJ0ZwRmkyNj9fcUEpJU8lU2JdVnE5bj1DbEZUaycnMCdDNnNkNmFrcVNiaU08N1UyMyRxPyUoci9FMGNgZ2loOU9oRklvSXUsLTZlYlBSZmg2Nm5NdDNDYWdVNlhXYHJpalp0N1xJPlZXQEk4TldFPmo3MCprXkExOCpZb0A9SVJfbUdBYzknPWVVImhyMUFNI28tOWkuKjFRZmRaNkdCUWojciY/NlwjQmVgTD5zczVcPllYTEUpLlRVNj5CUmtmMHIoOEhdYztcRlZxRHVnQ1g5ZGwkTygsYEInOiNSUkJAYFhedDg9NmldJUBSQSYlZjY1aSxWXCYkQjQ9RyVdUj9nLmtvaT03RV83J3U7WV1wNC8iUCRsWVpNJDg5Ok1ELWFaImI9RU4zbV9QOy5UVVNqTUheQ2w0ZHAtJVZtVTdnYmZDUDNQVlJQZG0yYVsocG9cT3BJakJjNDkmNzs3RCpPcTAuUCwrRFc2dFgyOEtDJkMobHJkTUssRj40VylQa2Q+W1c0TlIuPWgmUyNUci4xZy4jSTRfXT9pS19QJUM0WD8rJUNVcltwbEpqZ2E1cFdKPVlZPTozb0lGSis+ZWxyJDZWWz0tbSMnVXUxJ1FMNExlMTx1Mk9gNCtdcVorNF5KSVFSQlkyZnJKaWtkMTh1OkdhUlU3PHAwSUs7U1JCLVRgIVhebThVKFtcUlFTQWM8OmNEQ0AwbzMjKkJVLmUzY28oS0ZJMHNtbkNvSTAsTitrbz5IOCkkKlhtV1ZyT2VeSTAjSVc9ZEhkM3I/KysvP2g2M2tqVWg8TFtPNz9KMHRybCgnX0o7bVRHX2ZPPGhcZSkhW2RTXj5ISE5wIWZFcjFKbS0xNjFzVkFvKFA9MylFclMsbyZVUERVNDJtIS9PVVhIMWA+JVlHIXVDZjJfJShxTUtWIy4mLUlFTzdWYkNIQm9uIz43TT4tRExJRDI+V0ZJNGYuZTpHRC8nPWZ0NXVDJUdBRV0vYW1SR0tvVGBCKVUlKFVQc2Y0Nj8xQz5ePWs5Pz9tJV9SPWNiVyomZFQpTklxPk1nRltsXG1fJmpiakgjSUpgSCphY2lobCVETVFoM24sciQ8LGlmclIoM3RoPUo9K18oNGEwby0wKD1rIydOVE0nMk4pKk5OS2pMc0pJU0slTXI0cGtoOjpvIWhgPS9eMG8rakBHQzNAXWJKSSI7MVdpWVc1bG5QIkolUVI8KFFxI0ssWFtcPT9IZD1fPz9gVVZLJj1gOVBKMiFdPmtiVDtNMF9banJjMGNtU0ZfVXRoTSxrWSduYC09cENXRDgtVUo0ISVWb25TaFhrUT1zLTorUjNcOUchc2ZbYSM7SkhWQXItZ1ZiSGdxSFpTSmxAJSlWY25SIUVOWkYqU1U7YEwnPkonMktObyNEbTtGLEIlPmdqNmRlLFssOS8hZSI3QzY5PF5OJyVEaEFVJHJDXldZWStDbVszXjJDY2Itc1tgdThPU1tbQCdeK0JEJGFnL1I1QUhVXVhOV2VfZC08N2pUYm9uXV5sVDc2NjRdN1NDUjRqdXJQRG9LIUghJktBNCtcYFZgV05kVXFDRzM3Tk4zNElRbUJGYmtgZlNMOjxsY10sM2xqK3JTL1M+aE4hLj9UdXNkUy1aW2pvLmNpYlRcQUlVRCY6bUAyRlc8WDJgcFhkM1BkOlswZi1EJUxQWzwxXFFuSWIzQFE4ZE8zLU4mJiUsN3MlXUUwZk8rdSxfWitdYDlAY3UnKD8kQUxAblowIkxILlNmUmJCNUNbKGZxZDAxLD9XbF83VVVmRzRGLjlFXiM2cihCOmIwTyNBcD5RYz0iXF1RXzY4ZDxlVClPVFAoJjE0T2BMV11uUEBgMFpTMyhoZ2dqZ25xUEo/bXU9QzpwRSNjQnBFI2I/UjlCQUJLNC9wWVQzYjhnKFhrL3VxLyhHa1wyXjwuWCpINypHJ2lnJT9hW0JPbDhTbWg1QERtKyM1ZVFZV1FPcmlmbExrIl9ZOGZfXGhvWEdRPjtlWTQ7aEBAQkRwdC4yVlZzVHBsUHEqO2NmWWNhRUZATisuIy5kaUAvInBwXEVDMUVqJDpfYS1EWHVgblt1ZlJAQTcmMW0sTFZXczsxMVxbNz0paFslZWZncGNMKCVYUExXU11GOzUpMG5VKHEmPyZcMlNIL3NdcUNuRFM7RUpARXArIVRbckxsNkVEJTVfZ05hLVcpSUllI0pSM1NlTSUhW2RXNUhMOVtXSkRnIixMY3NoNiVmKmkncjVIYG0kWSRjJWJBRSRsTm89aiFPWVAzKSJFdTQ/KT4obWJcXzFbQFdyOUswVl5QKnFob3RHIUhJQTlAXF9UaUFZaV1MNUJlYEcyJjdlIjZxX3MrLWJyWCU1bF91YDFmUDpDOVhcXEg1WyZQKDxcI1tJQThFYkUzRD0jNVVkVGFCV2dFM1pqPF5UMjtjZUtQWzVBOiNRalg0NEhXZUU9MlZ1NXIjXkFacD1dfj5lbmRzdHJlYW0KZW5kb2JqCjIwIDAgb2JqCjw8Ci9GaWx0ZXIgWyAvQVNDSUk4NURlY29kZSAvRmxhdGVEZWNvZGUgXSAvTGVuZ3RoIDE5OTcKPj4Kc3RyZWFtCkdhdUhLRC9VPVEmSDg4LjBpRmhdNGI7O1xMIy8vazVoIz88NkdjM1c6QUo/NyImP01wWGg+W3JeVkAkdFRxazdgOjcmIioiZzonMWdXcVxJTjl1NExKJC9hQkFjVjk1a15JS2VvY1JDaClpdCZfRXU2OFA/VlgtRm42SjZfZFlqWyNmKXNIRnFFNjNWbGRITlNnNzc0OF0jPS46YTkrWE5eIVE8SE8/al1kYCFbKmUiTydXMDc6TlNtRG5jR0Y0WkE+cjVsPFNLQE1fU25gQmlePj4rI1w3WmRKXnE/OWskMCZHLi1mVFFNRjBSY2owIT8xUzZUSDtQKSxRPzAkNVlbVm4iO10pJUAzKykzRzElYzxGNCVPZlo5LTNzJjRRPjthTzUqTHBNTGZ0Kmk8ay5nY1xTJ11gIj0nOSQiPSNLTENcZCwycUskJksyLig/YVREPTdCMjM1O2hfVi9oQ1VsJ0xsJEQiT24yS1ckP0FyTk9ldV1uM0ArWGdxbjdxUkc6YkxELkhzZDttbjdSViNiJ1w8O1shOjIpMk5DdXFYbGI2JDItVSgqaUY0Yk1Tc084aUJaWGZxOTghTihgT183Q2ByY0coYj8+MWYmW0lZN0s5Vl1eZmFRKihCJztbJVIqdEBCKVU0K0JabW9XPjFLZUZaP0B1XHRTOEh1UT1eITdcRFA8YCJQK21yYihVLjpoZEJQMk5bXFJVZCghZnJIO15KZ1UyWmM7OjxKP05NVzNkRjYnT3IwLmI3YC06ayRQQDpET1RxYzViK0cvTEheR2QmN1JIdE08cDloRFwhPyIuVUEzOkFkLUdnTy9SR3RiVEoxZm80NUViTS1jQ2kkWDBGbk8nRkQ0Y1lqKF1XW189ZShwUT4jaCEtOF9JWzk3PzhPM1AiQGpJW1hLb2ZNbEJTMXExK1pDPXVRXigvVF9EXDFxKisuJipnISdsJ2F1MHNIP2lpK2JicWNVLUEraSdiazwtZS1jTFVCb0A8P1RpUj91IV01KV5ZVE5fKmVDUGJEQDYnTWc2UWZxQjlEIWNsVTdkO2I3bCo5JyNOazkxaDdzLFItKC8/JmU+QGxmViVfclY7XUdaJ0slUXNxVlAtaCg+TS4kUnRXQElSSz8+cS8lQUNlYl4lXWYzY2NoOTdRXkdzKCJxLjJYUiQ4W0xDb2tnR1FVZDJfPGRkbGRxcjNTUWEwJjV1YDkpRztQRmM4RlRVaz9NRDhPbnFJMWFGWz5zSV1WWyU6dUtAMyVoVmo8aSl0XTJocW9BXC9VMiFLNmhWTWhMaEZkYkxxPS8lKHFSR1RYPkxpU2NCPk5XYWwiLWtWckoqLS9vUm5Kai5HY3JNQmBjJlwrLjRGazYpT2VSVj41a10nY19oYipfVkxYRihXcTJbKVlPVURdRlVmbkcnZSlJKEIuLUwnJVwkN1U1MlhjOS4nMkkvKTg8aWVZSSdMZVokLm5ndW0lM1s6X2g1VzA+cWdFZTlmcFkqNEgjJzBwLl1TMTdiPGRwJilFJkFtJmdcNTw2L1FiMi87NVJDX10/YkMrL21YLGhGKT9KJS4pJykrUmphKiZXJURwIVU3QExeLVZZaF5jMU9ROTBvMSJpNjJnI2tDVSwjOT8jRGhET3VqLV0yRTdLTzRBQzg1Km01KSgwSk9NJUshWDFkTiVCU0o6cCsrSWdJNikwVEFuMSpgQnM4U1ttYkI4RFJRJkZjJ2hebENubjthISJBI0N1aUklLmImbXIsJCFVKC1wcHQ4VmNwWklQPUk3O082Ijw8ZyQ8LzNdLVI7My49SyNJXW42cElsYWBnK25IPycmcWNdLkVoPktUXTNMSENcZSs+LWxVOipLPkBCbDoqKWRdW1UuV3I6IkNqJ3JdOHRQI29XdFAtJzdFJjtLIjtrUVBNVFQyIkU3aiNnL0JIXXJFbCpKWVBaYDRLTj5bJFI5VTVKSUtLXGxtaV1HRXJLXF9MWiMtVDA5ajNjK2pAJExXUT43OjxsP0NSTGBgI0pfb0JHTmtyQEVnYzBNIlRxRFVxYGZ1S2c9SF9yTDlZPV9OMyNwK15ZLXRGLD1gMF5AQyhUQ3VMaWE/LzRNPislaSMhN2dEQ1QjREZJSj4zMHNNaE0qSm1hKVs2LUMmPlg2KjUmTjhYOWAlJUYyVmNpQERlYzQxKGRzRWdEZGQsJmErZWdsLTguLjQ/SSJmQDdab0BRIV9FJkgmYEFTaCFycTNcIUQ7ZV5ocTdvMjNhWC1wMG4wI1kjU1RoLy9SJ3FbbCdhOUMvTFtNWGw2YS1PNFxSZFBJUVosW01KdTtxS21pciEtQytfKnRPUyojYTRgSWo1YiQ0PS1tJkYpI2Vacjo3XzEtN1pQQSZgUiE5QE4iLkRTcjxELWNlKWRLMU5TRlhFKk5FMD1PX2JDYDksMCwmcUtvZSpmPFBfOTdiNCNaXW1yIS9qZjxITToiOFFHTDZxa1lHcUZsLnJLRmg6ZzdGRiNta00iXkhnblQhY3FxZXVZblo9cUY3JVlgKkNkMCFeZThdYjxAXzItcmUvL0RtKFguTmBeXCs5QChUcSZSdU05U3BKUz0zWGckJD1CNXVhST1nN2ctZzE3QkdRJ1o4NCRfRGVkKl0rLm0uYlNYVzlgT3IwTylYWSNOZU4mN34+ZW5kc3RyZWFtCmVuZG9iagp4cmVmCjAgMjEKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDYxIDAwMDAwIG4gCjAwMDAwMDAxMjIgMDAwMDAgbiAKMDAwMDAwMDIyOSAwMDAwMCBuIAowMDAwMDAwMzQxIDAwMDAwIG4gCjAwMDAwMDA0NTYgMDAwMDAgbiAKMDAwMDAwMDUzMyAwMDAwMCBuIAowMDAwMDAwNzA5IDAwMDAwIG4gCjAwMDAwMDA4OTggMDAwMDAgbiAKMDAwMDAwMTA5NiAwMDAwMCBuIAowMDAwMDAxMzMxIDAwMDAwIG4gCjAwMDAwMDE1MTQgMDAwMDAgbiAKMDAwMDAwMTcyMSAwMDAwMCBuIAowMDAwMDAxOTE1IDAwMDAwIG4gCjAwMDAwMDIxMDIgMDAwMDAgbiAKMDAwMDAwMjMwMiAwMDAwMCBuIAowMDAwMDAyNTU1IDAwMDAwIG4gCjAwMDAwMDI2MjUgMDAwMDAgbiAKMDAwMDAwMjkzMyAwMDAwMCBuIAowMDAwMDAzMDAwIDAwMDAwIG4gCjAwMDAwMDY4NjIgMDAwMDAgbiAKdHJhaWxlcgo8PAovSUQgCls8OTM2ODYyOWI4ZTZmZTIwYWQ1MWNiMzc4ODc0MDVmZDI+PDkzNjg2MjliOGU2ZmUyMGFkNTFjYjM3ODg3NDA1ZmQyPl0KJSBSZXBvcnRMYWIgZ2VuZXJhdGVkIFBERiBkb2N1bWVudCAtLSBkaWdlc3QgKG9wZW5zb3VyY2UpCgovSW5mbyAxNyAwIFIKL1Jvb3QgMTYgMCBSCi9TaXplIDIxCj4+CnN0YXJ0eHJlZgo4OTUxCiUlRU9GCg==" download>Résumé ↓</a>
+      </div>
+    </div>
+
+    <nav class="mobile-nav" aria-label="Page sections">
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Links</a>
+    </nav>
+
+    <div class="layout">
+      <main class="content" id="main">
+        <header class="hero">
+          <p class="hero-kicker">MOHSIN ZAHID · LAHORE, PAKISTAN</p>
+          <h1>Building systems that let agents do real work.<span class="role">Backend Lead / Agentic AI Engineer</span></h1>
+          <p class="hero-copy">I design production multi-agent systems, MCP tooling, and secure workflow platforms—turning research, planning, execution, approval, and review into reliable software.</p>
+          <div class="hero-actions">
+            <a class="button" href="#projects">Explore selected work <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5"/></svg></a>
+            <a class="button secondary" href="mailto:mohsinzahid16@gmail.com">Start a conversation</a>
+          </div>
+        </header>
+
+        <section class="section" id="projects" aria-labelledby="projects-title">
+          <div class="section-head">
+            <p class="section-no">01 / 04</p>
+            <h2 id="projects-title">Selected projects</h2>
+            <p class="section-intro">Platforms built around explicit context, bounded autonomy, and a human decision at the moments that matter.</p>
+          </div>
+
+          <div class="projects">
+            <article class="project">
+              <div class="project-copy">
+                <span class="project-index">PROJECT 01 · PRODUCTION PLATFORM</span>
+                <h3>Pulse Workspace</h3>
+                <p>A multiplayer Slack and web workspace for AI teammates, built with NestJS and MCP around project-scoped context, connected tools, memory, scheduled workflows, and approval-gated execution.</p>
+                <a class="project-link" href="https://pulse.must.company" target="_blank" rel="noreferrer">pulse.must.company ↗</a>
+              </div>
+              <div class="project-visual" aria-hidden="true">
+                <svg viewBox="0 0 300 230" role="img">
+                  <path class="edge" d="M150 42v42M150 84L67 120M150 84l83 36M67 120v50M233 120v50M67 170h166"/>
+                  <path class="edge dash" d="M67 120l83 68 83-68"/>
+                  <rect class="node node-hot" x="110" y="18" width="80" height="34" rx="5"/><text class="svg-label" x="126" y="39">PROJECT</text>
+                  <rect class="node" x="110" y="74" width="80" height="34" rx="5"/><text class="svg-label" x="126" y="95">CONTEXT</text>
+                  <rect class="node" x="27" y="110" width="80" height="34" rx="5"/><text class="svg-label" x="46" y="131">TOOLS</text>
+                  <rect class="node" x="193" y="110" width="80" height="34" rx="5"/><text class="svg-label" x="208" y="131">MEMORY</text>
+                  <rect class="node" x="27" y="160" width="80" height="34" rx="5"/><text class="svg-label" x="43" y="181">APPROVAL</text>
+                  <rect class="node" x="193" y="160" width="80" height="34" rx="5"/><text class="svg-label" x="213" y="181">EFFECT</text>
+                </svg>
+              </div>
+            </article>
+
+            <article class="project text-only">
+              <div class="project-copy">
+                <span class="project-index">PROJECT 02 · MCP / CODE INTELLIGENCE</span>
+                <h3>CodeRover MCP</h3>
+                <p>Graph code search.</p>
+                <a class="project-link" href="https://coderover.must.company" target="_blank" rel="noreferrer">coderover.must.company ↗</a>
+              </div>
+            </article>
+
+            <article class="project">
+              <div class="project-copy">
+                <span class="project-index">PROJECT 03 · MULTI-AGENT ENGINEERING</span>
+                <h3>Hermes + dev-os</h3>
+                <p>Autonomous engineering workflows that research and plan, pause for one human approval, then dispatch implementation to specialized agents with verification and review before reporting.</p>
+                <a class="project-link" href="https://github.com/must-mohsin1" target="_blank" rel="noreferrer">View engineering work on GitHub ↗</a>
+              </div>
+              <div class="project-visual" aria-hidden="true">
+                <div class="review-flow">
+                  <div class="review-box">RESEARCH<br>PLAN<br><span style="opacity:.6">evidence attached</span></div>
+                  <div class="review-arrow">→</div>
+                  <div class="review-box approval">HUMAN<br>REVIEW<br><span style="opacity:.7">approve</span></div>
+                  <div class="review-box">BUILD<br>VERIFY<br><span style="opacity:.6">agent fleet</span></div>
+                  <div class="review-arrow">→</div>
+                  <div class="review-box">REPORT<br>RECEIPTS<br><span style="opacity:.6">auditable result</span></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="experience" aria-labelledby="experience-title">
+          <div class="section-head">
+            <p class="section-no">02 / 04</p>
+            <h2 id="experience-title">Experience</h2>
+            <p class="section-intro">A path from product engineering to platform leadership, with increasing focus on AI-native systems and human-controlled automation.</p>
+          </div>
+          <div class="experience-list">
+            <article class="role-row">
+              <div class="role-date">JUN 2025<br>— PRESENT</div>
+              <div class="role-title"><h3>Backend Lead / Agentic AI Engineer</h3><p>MUST Company</p></div>
+              <p class="role-note">Owning production multi-agent systems, MCP integrations, secure approvals, project context, and engineering workflows.</p>
+            </article>
+            <article class="role-row">
+              <div class="role-date">DEC 2022<br>— MAY 2025</div>
+              <div class="role-title"><h3>Full Stack Engineer</h3><p>MUST Company</p></div>
+              <p class="role-note">Built production SaaS across API design, authentication, data architecture, integrations, and frontend delivery.</p>
+            </article>
+            <article class="role-row">
+              <div class="role-date">FEB 2022<br>— FEB 2023</div>
+              <div class="role-title"><h3>React Native Developer</h3><p>Instamobile</p></div>
+              <p class="role-note">Developed cross-platform mobile applications for client SaaS products.</p>
+            </article>
+            <article class="role-row">
+              <div class="role-date">NOV 2020<br>— NOV 2021</div>
+              <div class="role-title"><h3>React Native Developer</h3><p>Upwork</p></div>
+            </article>
+          </div>
+          <p class="subsection-label">EDUCATION</p>
+          <div class="experience-list">
+            <article class="role-row">
+              <div class="role-date">2016<br>— 2020</div>
+              <div class="role-title"><h3>BSc Computer Science</h3><p>University of Central Punjab</p></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="skills" aria-labelledby="skills-title">
+          <div class="section-head">
+            <p class="section-no">03 / 04</p>
+            <h2 id="skills-title">Working stack</h2>
+            <p class="section-intro">Strongest where backend architecture, AI orchestration, product delivery, and operational discipline meet.</p>
+          </div>
+          <div class="skill-board">
+            <div class="skill-group"><h3>BACKEND</h3><div class="skill-list"><span>TypeScript</span><span>NestJS</span><span>Python</span><span>FastAPI</span></div></div>
+            <div class="skill-group"><h3>DATA & INFRA</h3><div class="skill-list"><span>PostgreSQL</span><span>Docker</span><span>REST APIs</span><span>CI/CD</span></div></div>
+            <div class="skill-group"><h3>PRODUCT</h3><div class="skill-list"><span>React</span><span>Next.js</span><span>React Native</span></div></div>
+            <div class="skill-group"><h3>AGENTIC SYSTEMS</h3><div class="skill-list"><span>MCP</span><span>Multi-agent orchestration</span><span>Approval gates</span><span>Context isolation</span></div></div>
+          </div>
+        </section>
+
+        <section class="section" id="contact" aria-labelledby="contact-title">
+          <div class="section-head">
+            <p class="section-no">04 / 04</p>
+            <h2 id="contact-title">Links</h2>
+          </div>
+          <div class="contact-panel">
+            <h2>Let’s build AI systems people can trust.</h2>
+            <p>Interested in agentic AI engineering, backend leadership, MCP infrastructure, and product teams turning autonomous workflows into reliable software.</p>
+            <div class="contact-links">
+              <a class="button" href="mailto:mohsinzahid16@gmail.com" target="_blank" rel="noreferrer">Email Mohsin</a>
+              <a class="button secondary" href="https://linkedin.com/in/mohsin-zahid-dev" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+              <a class="button secondary" href="https://github.com/must-mohsin1" target="_blank" rel="noreferrer">GitHub ↗</a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <aside class="rail" aria-label="Page navigation">
+        <p class="rail-label">FOUR POINTS</p>
+        <nav>
+          <a href="#projects" data-section="projects"><span>01</span> Projects</a>
+          <a href="#experience" data-section="experience"><span>02</span> Experience</a>
+          <a href="#skills" data-section="skills"><span>03</span> Skills</a>
+          <a href="#contact" data-section="contact"><span>04</span> Links</a>
+        </nav>
+      </aside>
+    </div>
+
+    <footer>
+      <span>Mohsin Zahid · Agentic AI Engineer</span>
+      <span>TypeScript · Python · MCP · Systems</span>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var links = Array.prototype.slice.call(document.querySelectorAll('.rail a[data-section]'));
+      var sections = links.map(function (link) { return document.getElementById(link.getAttribute('data-section')); }).filter(Boolean);
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              links.forEach(function (link) {
+                link.classList.toggle('active', link.getAttribute('data-section') === entry.target.id);
+              });
+            }
+          });
+        }, { rootMargin: '-20% 0px -65% 0px', threshold: 0 });
+        sections.forEach(function (section) { observer.observe(section); });
+      }
+    }());
+  </script>
+</body>
+</html>
